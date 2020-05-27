@@ -1,11 +1,11 @@
 # Spring Boot and Vue Template
 
-This template is for spring boot and vue projects. All vue code is stored in /client and all spring boot code is stored in /server. I have already implemented JWT token authentication for Spring Boot and created login/logout pages in vue to show usage.
+This template is for Spring Boot and Vue projects. All Vue code is stored in /client and all Spring Boot code is stored in /server. I have already implemented JWT token authentication for Spring Boot and created login/logout pages in Vue to show usage.
 
 ## After Forking
 ### Vue:
 1. Update name in package.json.
-2. Run `npm install`
+2. Run `npm install`.
 ### Spring Boot:
 1. Update group in build.gradle and project name in settings.gradle.
 2. Update package from tech.noahgeren.template to what fit your needs.
@@ -14,7 +14,7 @@ This template is for spring boot and vue projects. All vue code is stored in /cl
 
 ## To Build
 1. Uncomment lines 14 - 30 of vue.config.js.
-2. Run `npm run build`
+2. Run `npm run build`.
 3. In eclipse run the `bootWar` gradle task.
 4. The result should be ROOT.war in /server/build/libs.
 
