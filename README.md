@@ -8,15 +8,17 @@ This template is for Spring Boot and Vue projects. All Vue code is stored in /cl
 2. Run `npm install`.
 ### Spring Boot:
 1. Update group in build.gradle and project name in settings.gradle.
-2. Update package from tech.noahgeren.template to what fit your needs.
+2. Update package from tech.noahgeren.template to what fits your needs.
 3. Rename TemplateApplication class.
-4. Refresh Gradle.
+4. Change the JWT private key in application.properties.
+5. Refresh Gradle.
 
 ## To Build
 1. Uncomment lines 14 - 30 of vue.config.js.
 2. Run `npm run build`.
-3. In eclipse run the `bootWar` gradle task.
-4. The result should be ROOT.war in /server/build/libs.
+3. Change the profile from dev to prod in application.properties.
+4. In eclipse run the `bootWar` gradle task.
+5. The result should be ROOT.war in /server/build/libs.
 
 ## What's Included
 ### Vue:
