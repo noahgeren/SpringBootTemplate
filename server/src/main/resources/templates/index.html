@@ -10,6 +10,10 @@
 <link th:href="@{/js/chunk-vendors.js}" rel=preload as=script>
 <link th:href="@{/js/app.js}" rel=preload as=script>
 <link th:href="@{/css/chunk-vendors.css}" rel=stylesheet>
+<!-- <link th:href="@{/css/app.css}" rel=stylesheet> -->
+<script th:inline="javascript">
+	window.contextUrl = /*[[@{/}]]*/ '/';
+</script>
 </head>
 <body>
 	<noscript>
