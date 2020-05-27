@@ -1,43 +1,29 @@
 module.exports = {
   productionSourceMap: false,
-  /* ONLY FOR MULTIPAGE APPS
-  pages: {
-    client: {
-      entry: 'src/client/main.js',
-      template: 'public/index.html',
-      filename: 'client.html'
-    },
-    admin: {
-      entry: 'src/admin/main.js',
-      template: 'public/index.html',
-      filename: 'admin.html'
-    }
-  },
-  */
+  // IF YOU UNCOMMENT THIS MAKE SURE TO UPDATE server/src/main/resources/templates/index.html AFTER BUILDING
+  // pages: {
+  //   index: {
+  //     entry: 'src/main.js',
+  //     template: 'public/index.html',
+  //     filename: '../../server/src/main/resources/templates/index.html'
+  //   }
+  // },
   devServer: {
-    /* ONLY FOR MULTIPAGE APPS
-    historyApiFallback: {
-      rewrites: [
-        { from: /^\/game/, to: '/client.html' },
-        { from: /^\/admin/, to: '/admin.html' }
-      ]
-    },
-    */
     proxy: 'http://localhost:8080'
   },
   chainWebpack: config => {
     if(config.plugins.has('extract-css')) {
       const extractCSSPlugin = config.plugin('extract-css')
       extractCSSPlugin && extractCSSPlugin.tap(() => [{
-        filename: '[name].css',
-        chunkFilename: '[name].css'
+        filename: '../../server/src/main/resources/static/css/[name].css',
+        chunkFilename: '../../server/src/main/resources/static/css/[name].css'
       }])
     }
   },
   configureWebpack: {
     output: {
-      filename: '[name].js',
-      chunkFilename: '[name].js'
+      filename: '../../server/src/main/resources/static/js/app.js',
+      chunkFilename: '../../server/src/main/resources/static/js/[name].js'
     }
   }
 }
