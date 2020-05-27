@@ -11,6 +11,7 @@ module.exports = {
   devServer: {
     proxy: 'http://localhost:8080'
   },
+  // KEEP THIS COMMENTED WHILE DEVELOPING. UNCOMMENT ONLY TO BUILD
   // chainWebpack: config => {
   //   if(config.plugins.has('extract-css')) {
   //     const extractCSSPlugin = config.plugin('extract-css')
