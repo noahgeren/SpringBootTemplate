@@ -24,12 +24,13 @@ import tech.noahgeren.template.domain.User;
 public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 	
 	private static final long EXPIRATION_TIME = 864_000_000; // 10 days
-	protected static final byte[] SECRET = "SecretKey".getBytes();
 	
-	private AuthenticationManager authenticationManager;
+	private final AuthenticationManager authenticationManager;
+	private final byte[] secretKey;
 	
-	public JWTAuthenticationFilter(AuthenticationManager authenticationManager) {
+	public JWTAuthenticationFilter(AuthenticationManager authenticationManager, String secretKey) {
 		this.authenticationManager = authenticationManager;
+		this.secretKey = secretKey.getBytes();
 	}
 
 	@Override
@@ -50,7 +51,7 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         String token = JWT.create()
                 .withSubject(user.getUsername())
                 .withExpiresAt(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
-                .sign(Algorithm.HMAC512(SECRET));
+                .sign(Algorithm.HMAC512(secretKey));
         res.addHeader("Authorization", "Bearer " + token);
     }
 	

@@ -1,6 +1,7 @@
 package tech.noahgeren.template.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -20,6 +21,9 @@ import tech.noahgeren.template.security.JWTAuthorizationFilter;
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+	
+	@Value("${jwt.secretkey}")
+	private String secretKey;
 
 	@Autowired
 	private UserDetailsService userDetailsService;
@@ -33,8 +37,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				.antMatchers("/api/**").authenticated()
 				.anyRequest()
 					.permitAll().and()
-			.addFilter(new JWTAuthenticationFilter(authenticationManager()))
-			.addFilter(new JWTAuthorizationFilter(authenticationManager()))
+			.addFilter(new JWTAuthenticationFilter(authenticationManager(), secretKey))
+			.addFilter(new JWTAuthorizationFilter(authenticationManager(), secretKey))
 			// this disables session creation on Spring Security
 			.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 	}

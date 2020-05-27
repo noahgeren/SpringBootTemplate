@@ -19,8 +19,11 @@ import com.auth0.jwt.exceptions.TokenExpiredException;
 
 public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
 
-	public JWTAuthorizationFilter(AuthenticationManager authenticationManager) {
+	private final byte[] secretKey;
+	
+	public JWTAuthorizationFilter(AuthenticationManager authenticationManager, String secretKey) {
 		super(authenticationManager);
+		this.secretKey = secretKey.getBytes();
 	}
 	
 	@Override
@@ -44,7 +47,7 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
         if (token != null) {
             // parse the token.
         	try {
-	            String user = JWT.require(Algorithm.HMAC512(JWTAuthenticationFilter.SECRET))
+	            String user = JWT.require(Algorithm.HMAC512(secretKey))
 	                    .build()
 	                    .verify(token.replace("Bearer ", ""))
 	                    .getSubject();
