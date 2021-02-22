@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import tech.noahgeren.template.dao.UserRepository;
 
 @Service
-public class UserDetailsServiceImpl implements UserDetailsService{
+public class UserService implements UserDetailsService{
 	
 	@Autowired
 	private UserRepository userRepo;
