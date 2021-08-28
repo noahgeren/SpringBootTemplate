@@ -19,7 +19,7 @@ public class CommandLineAppStartupRunner implements CommandLineRunner{
 
 	@Override
 	public void run(String... args) throws Exception {
-		userRepo.save(new User("wafflemanox", pwEncoder.encode("test")));
+		userRepo.save(new User("noahgeren", pwEncoder.encode("test")));
 	}
 
 }

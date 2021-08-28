@@ -3,6 +3,7 @@ plugins {
 	id 'io.spring.dependency-management' version '1.0.9.RELEASE'
 	id 'java'
 	id 'war'
+	id 'com.ewerk.gradle.plugins.querydsl' version '1.0.10'
 }
 
 group = 'tech.noahgeren'
@@ -13,10 +14,33 @@ configurations {
 	compileOnly {
 		extendsFrom annotationProcessor
 	}
+	querydsl.extendsFrom compileClasspath
+}
+
+sourceSets {
+    main {
+        java {
+            srcDir 'src/main/java'
+            srcDir "$buildDir/generated/source/main"
+        }
+    }
+}
+
+querydsl {
+    jpa = true
+    querydslSourcesDir = "$buildDir/generated/source/main"
 }
 
 repositories {
 	mavenCentral()
+}
+
+project.afterEvaluate {
+    project.tasks.compileQuerydsl.options.compilerArgs = [
+            "-proc:only",
+            "-processor", project.querydsl.processors() +
+                    ',lombok.launch.AnnotationProcessorHider$AnnotationProcessor'
+    ]
 }
 
 dependencies {
@@ -33,6 +57,22 @@ dependencies {
 	providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
 	// https://mvnrepository.com/artifact/com.auth0/java-jwt
 	compile group: 'com.auth0', name: 'java-jwt', version: '3.10.3'
+	// QueryDSL
+	implementation 'com.querydsl:querydsl-jpa'
+    implementation 'com.querydsl:querydsl-apt'
+}
+
+ext {
+    generatedSourcesDir = file("${buildDir}/generated-sources/javac/main/java")
+}
+
+compileJava {
+    doFirst {
+        // Directory should exists before compilation started.
+        generatedSourcesDir.mkdirs()
+    }
+    // specify place to keep source files
+    options.compilerArgs += ['-s', generatedSourcesDir]
 }
 
 bootWar {
