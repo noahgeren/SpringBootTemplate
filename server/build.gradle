@@ -26,6 +26,10 @@ sourceSets {
     }
 }
 
+compileQuerydsl {
+    options.annotationProcessorPath = configurations.querydsl
+}
+
 querydsl {
     jpa = true
     querydslSourcesDir = "$buildDir/generated/source/main"
@@ -56,7 +60,9 @@ dependencies {
 	annotationProcessor 'org.projectlombok:lombok'
 	providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
 	// https://mvnrepository.com/artifact/com.auth0/java-jwt
-	compile group: 'com.auth0', name: 'java-jwt', version: '3.10.3'
+	implementation group: 'com.auth0', name: 'java-jwt', version: '3.18.1'
+	// https://mvnrepository.com/artifact/org.apache.commons/commons-lang3
+	implementation group: 'org.apache.commons', name: 'commons-lang3', version: '3.12.0'
 	// QueryDSL
 	implementation 'com.querydsl:querydsl-jpa'
     implementation 'com.querydsl:querydsl-apt'
