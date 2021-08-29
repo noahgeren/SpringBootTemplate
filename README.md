@@ -14,7 +14,7 @@ This template is for Spring Boot and Vue projects. All Vue code is stored in /cl
 5. Refresh Gradle.
 
 ## To Build
-1. Uncomment lines 14 - 30 of vue.config.js.
+1. Uncomment lines 16 - 32 of vue.config.js.
 2. Run `npm run build`.
 3. Change the profile from dev to prod in application.properties.
 4. In eclipse run the `bootWar` gradle task.
@@ -22,7 +22,7 @@ This template is for Spring Boot and Vue projects. All Vue code is stored in /cl
 
 ## What's Included
 ### Vue:
- - Axios, Bootstrap-Vue, JS Cookie, Velocity Animate, Vue Router, Vuex
+ - Axios, Bootstrap-Vue, Vue Router, Vuex
 ### Spring Boot:
- - Dev tools, JDBC, JPA, H2 Database, MySQL JDBC Binding, Security, Thymeleaf, Lombok, Auth0 JWT
+ - Dev tools, JDBC, JPA, H2 Database, MySQL JDBC Binding, Security, Thymeleaf, Lombok, Auth0 JWT, Apache Commons Lang3, QueryDSL
  
