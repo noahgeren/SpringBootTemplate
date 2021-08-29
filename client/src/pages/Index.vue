@@ -1,26 +1,26 @@
 <template>
     <div class="text-center">
-        <h1>{{ msg }}</h1>
+        <h1>Welcome to vue!</h1>
         <b-button variant="secondary" @click="logout">Logout</b-button>
     </div>
 </template>
 <script>
+import { A_LOGOUT } from '@/store/modules/user';
+
 export default {
-    data(){
-        return {
-            msg: 'Welcome to vue!'
-        };
+  data() {
+    return {};
+  },
+  methods: {
+    logout() {
+      this.$store.dispatch(A_LOGOUT)
+        .then(() => {
+          this.$router.push({
+            path: '/login',
+            query: { logout: true },
+          });
+        });
     },
-    methods: {
-        logout() {
-            this.$store.dispatch('logout')
-                .then(() => {
-                    this.$router.push({
-                        path: '/login',
-                        query: { logout: true }
-                    });
-                });
-        }
-    }
-}
+  },
+};
 </script>

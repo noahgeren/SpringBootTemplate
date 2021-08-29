@@ -1,6 +1,7 @@
 module.exports = {
   productionSourceMap: false,
-  // IF YOU UNCOMMENT THIS MAKE SURE TO UPDATE server/src/main/resources/templates/index.html AFTER BUILDING
+  // IF YOU UNCOMMENT THIS MAKE SURE TO UPDATE
+  // server/src/main/resources/templates/index.html AFTER BUILDING
   // pages: {
   //   index: {
   //     entry: 'src/main.js',
@@ -9,7 +10,7 @@ module.exports = {
   //   }
   // },
   devServer: {
-    proxy: 'http://localhost:8080'
+    proxy: 'http://localhost:8080',
   },
   // KEEP THIS COMMENTED WHILE DEVELOPING. UNCOMMENT ONLY TO BUILD
   // chainWebpack: config => {
@@ -27,4 +28,4 @@ module.exports = {
   //     chunkFilename: '../../server/src/main/resources/static/js/[name].js'
   //   }
   // }
-}
+};

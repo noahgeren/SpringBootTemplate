@@ -2,24 +2,20 @@ package tech.noahgeren.template;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
-import tech.noahgeren.template.dao.UserRepository;
 import tech.noahgeren.template.domain.User;
+import tech.noahgeren.template.services.UserService;
 
 @Component
 public class CommandLineAppStartupRunner implements CommandLineRunner{
 	
 	@Autowired
-	private UserRepository userRepo;
-	
-	@Autowired
-	private BCryptPasswordEncoder pwEncoder;
+	private UserService userService;
 
 	@Override
 	public void run(String... args) throws Exception {
-		userRepo.save(new User("noahgeren", pwEncoder.encode("test")));
+		userService.saveUser(new User("noahgeren", "test"), true);
 	}
 
 }
