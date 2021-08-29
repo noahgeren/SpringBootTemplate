@@ -22,7 +22,7 @@ const plainAxios = axios.create({
 securedAxios.interceptors.response.use(null, (error) => {
   if (error.response && error.response.status === 401) {
     delete localStorage.loggedIn;
-    window.location.replace('/login');
+    window.location.replace(`/login?redirect=${encodeURIComponent(window.location.pathname + window.location.search)}`);
   }
   return Promise.reject(error);
 });

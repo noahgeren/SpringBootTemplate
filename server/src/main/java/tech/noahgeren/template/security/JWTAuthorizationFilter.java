@@ -9,7 +9,6 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -38,10 +37,14 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
 	@Override
     protected void doFilterInternal(HttpServletRequest req, HttpServletResponse res, FilterChain chain) 
     		throws IOException, ServletException {
+		if(req.getCookies() == null) {
+			chain.doFilter(req, res);
+			return;
+		}
         String token = Arrays.stream(req.getCookies()).filter(c -> "jwt-token".equals(c.getName())).map(Cookie::getValue).findFirst().orElse(null);
 
         if (token == null) {
-        	res.setStatus(HttpStatus.UNAUTHORIZED.value());
+        	chain.doFilter(req, res);
             return;
         }
 

@@ -1,13 +1,14 @@
 package tech.noahgeren.template.domain;
 
-import java.util.LinkedList;
-import java.util.List;
+import java.util.Collection;
+import java.util.Collections;
 
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -15,6 +16,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonProperty.Access;
 
 import lombok.Data;
+import tech.noahgeren.template.security.AppAuthority;
 
 @Entity
 @Data
@@ -29,14 +31,20 @@ public class User implements UserDetails {
 	private String password;
 	
 	@JsonIgnore
-	@OneToMany(fetch = FetchType.EAGER)
-	private List<UserRole> authorities = new LinkedList<>();
+	@Enumerated(EnumType.STRING)
+	private AppAuthority role;
 	
 	public User() { }
 	
 	public User(String username, String password) {
 		this.username = username;
 		this.password = password;
+	}
+	
+	@JsonIgnore
+	@Override
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+		return Collections.singleton(role);
 	}
 
 	@JsonIgnore
