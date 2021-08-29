@@ -13,19 +13,21 @@ module.exports = {
     proxy: 'http://localhost:8080',
   },
   // KEEP THIS COMMENTED WHILE DEVELOPING. UNCOMMENT ONLY TO BUILD
-  // chainWebpack: config => {
-  //   if(config.plugins.has('extract-css')) {
-  //     const extractCSSPlugin = config.plugin('extract-css')
-  //     extractCSSPlugin && extractCSSPlugin.tap(() => [{
-  //       filename: '../../server/src/main/resources/static/css/[name].css',
-  //       chunkFilename: '../../server/src/main/resources/static/css/[name].css'
-  //     }])
+  // chainWebpack: (config) => {
+  //   if (config.plugins.has('extract-css')) {
+  //     const extractCSSPlugin = config.plugin('extract-css');
+  //     if (extractCSSPlugin) {
+  //       extractCSSPlugin.tap(() => [{
+  //         filename: '../../server/src/main/resources/static/css/[name].css',
+  //         chunkFilename: '../../server/src/main/resources/static/css/[name].css',
+  //       }]);
+  //     }
   //   }
   // },
   // configureWebpack: {
   //   output: {
   //     filename: '../../server/src/main/resources/static/js/app.js',
-  //     chunkFilename: '../../server/src/main/resources/static/js/[name].js'
-  //   }
-  // }
+  //     chunkFilename: '../../server/src/main/resources/static/js/[name].js',
+  //   },
+  // },
 };
