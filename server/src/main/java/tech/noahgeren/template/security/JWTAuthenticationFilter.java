@@ -7,10 +7,11 @@ import java.util.Date;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseCookie;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -25,7 +26,7 @@ import tech.noahgeren.template.domain.User;
 
 public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 	
-	private static final int EXPIRATION_TIME = 864_000; // 10 days
+	private static final long EXPIRATION_TIME = 864_000L; // 10 days
 	
 	private final AuthenticationManager authenticationManager;
 	private final byte[] secretKey;
@@ -54,10 +55,9 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 		final User user = (User) auth.getPrincipal();
         String token = JWT.create()
                 .withSubject(user.getUsername())
-                .withExpiresAt(new Date(System.currentTimeMillis() + EXPIRATION_TIME * 1000l))
+                .withExpiresAt(new Date(System.currentTimeMillis() + EXPIRATION_TIME * 1000L))
                 .sign(Algorithm.HMAC512(secretKey));
-        final Cookie authCookie = buildCookie(token, EXPIRATION_TIME);
-        res.addCookie(authCookie);
+        setAuthCookie(res, token, EXPIRATION_TIME);
         final String userJson = objectMapper.writeValueAsString(user);
         res.setContentType("application/json");
         res.setCharacterEncoding("UTF-8");
@@ -67,16 +67,18 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     }
 	
 	public void logout(HttpServletResponse res) {
-		final Cookie logoutCookie = buildCookie(null, 0);
-		res.addCookie(logoutCookie);
+		setAuthCookie(res, null, 0);
 	}
 	
-	private Cookie buildCookie(String token, int expiration) {
-		final Cookie cookie = new Cookie("jwt-token", token);
-		cookie.setMaxAge(expiration);
-		cookie.setSecure(true);
-		cookie.setHttpOnly(true);
-        return cookie;
+	private void setAuthCookie(HttpServletResponse res, String token, long expiration) {
+		final ResponseCookie authCookie = ResponseCookie.from("jwt-token", token)
+				.maxAge(expiration)
+				.secure(true)
+				.httpOnly(true)
+				.sameSite("Strict")
+				.path("/")
+				.build();
+		res.addHeader(HttpHeaders.SET_COOKIE, authCookie.toString());
 	}
 	
 }
